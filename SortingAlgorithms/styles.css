@@ -1,0 +1,22 @@
+* {
+  color: blue;
+  font-family: "Raleway", sans-serif;
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#sortingCanvas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#selectors {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
