@@ -1,27 +1,29 @@
+//Sets Variables Up for Canvas and Canvas Context(ctx)
 let canvas = document.querySelector("#sortCanvas");
 let ctx = canvas.getContext("2d");
+//Sets Variable sortingArray to be an Array
 let sortingArray = [];
 
+//Adding an event listener to #resetButton in HTML
 let resetButton = document.querySelector("#resetButton").addEventListener("click", function reset() {
+    //Clears Canvas and Re-Runs through LineDraw Function
     drawRect(0, 0, canvas.width, canvas.height, "blue");
     lineDraw();
-    console.log("hello from reset");
   });
-
-function canvasSetup() {
-  console.log("Hello from the otherside!");
-}
-
+  
+//Grabs random integer between 1 and the Height of the Canvas
 function getRndmInt() {
   return Math.floor(Math.random() * canvas.height);
 }
 
+//This function is called in Bubble Sort function and swaps two values
 function swap(arr, x, y) {
   let temp = arr[x]
   arr[x] = arr[y]
   arr[y] = temp
 }
 
+//Bubble Sorting Algorithm
 function bubbleSort() {
   for(i = 0; i < sortingArray.length; i++) {
     for(j = 0; j < sortingArray.length-i-1; j++) {
@@ -34,11 +36,13 @@ function bubbleSort() {
   }
 }
 
+//Insertion Sort Algorithm
 function insertSort() {
   for(i = 0; i < sortingArray.length; i++) {
     key = sortingArray[i]
     
     j = i-1
+    
     while(j >= 0 && key < sortingArray[j]) {
       sortingArray[j +1] = sortingArray[j];
       j-= 1
@@ -47,7 +51,9 @@ function insertSort() {
   }
 }
 
+//Quick Sort Algorithm
 function quickSort(arr, low, high) {
+  //Partition Function assigns pivot variable to be the higher value of array assigned within parameters
   function partition(arr, low, high) {
     let i = (low - 1);
     let pivot = arr[high];
@@ -74,14 +80,9 @@ function quickSort(arr, low, high) {
   }
 }
 
-function drawRect(x, y, width, height, color) {
-  ctx.beginPath();
-  ctx.rect(x, y, width, height);
-  ctx.fillStyle = color;
-  ctx.fill();
-}
-
+//Draws all of the lines and prompts the user what type of sorting they would like to take place.
 function lineDraw() {
+  //Draw function assigns line drawing to a single function
   function draw(x, y, a, b, color, lineWid) {
     ctx.strokeStyle = color;
     ctx.lineWidth = lineWid;
@@ -91,13 +92,13 @@ function lineDraw() {
     ctx.lineTo(a, b);
     ctx.stroke();
   }
-  
+  //Assigns a random integer to sortingArray at index i
   for(i = 0; i < canvas.width; i++) {
     sortingArray[i] = getRndmInt();
   }
-  
+  //Assigns sorting choice to be the answer to the window prompt
   let sortingChoice = window.prompt("What sorting algorithm would you like to see? (Bubble, Insertion, Quick, Heap, and Merge)");
-  
+  //Checks to see what sorting choice is decided via sortingChoice
   if(sortingChoice === "bubble sort" || sortingChoice === "Bubble Sort" || sortingChoice === "bubble" || sortingChoice === "Bubble") {
     bubbleSort();
   } else if(sortingChoice === "insertion sort" || sortingChoice === "Insertion Sort" || sortingChoice === "insertion" || sortingChoice === "Insertion") {
@@ -105,11 +106,20 @@ function lineDraw() {
   } else if(sortingChoice === "quick sort" || sortingChoice === "Quick Sort" || sortingChoice === "quick" || sortingChoice === "Quick") {
     quickSort(sortingArray, 0, sortingArray.length-1);
   }
-  
+  //Actually draws lines sortingArray.length times
   for(i = 0; i < sortingArray.length; i++) {
     draw(i, canvas.height, i, canvas.height - sortingArray[i], "white", 2);
   }
 }
 
+//Draw rectangle where sorting takes place
+function drawRect(x, y, width, height, color) {
+  ctx.beginPath();
+  ctx.rect(x, y, width, height);
+  ctx.fillStyle = color;
+  ctx.fill();
+}
+
+//Calls the initial drawRect and lineDraw functions
 drawRect(0, 0, canvas.width, canvas.height, "blue");
 lineDraw();
