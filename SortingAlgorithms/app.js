@@ -60,12 +60,12 @@ function quickSort(arr, low, high) {
     for(j = low; j < high; j++) {
       if (arr[j] <= pivot) {
         i = i + 1
-        temp = arr[i]
+        let temp = arr[i]
         arr[i] = arr[j]
         arr[j] = temp
       }
     }
-    temp2 = arr[i+1]
+    let temp2 = arr[i+1]
     arr[i+1] = arr[high]
     arr[high] = temp2
       
@@ -78,6 +78,57 @@ function quickSort(arr, low, high) {
     quickSort(arr, low, p - 1);
     quickSort(arr, p + 1, high);
   }
+}
+
+
+function heapSort(arr) {
+  function heapify(arr, n, i) {
+    let largest = i;
+    let l = 2 * i + 1;
+    let r = 2 * i + 2;
+    
+    if(l < n && arr[largest] < arr[l]) {
+      largest = l;
+    }
+  
+    if(r < n && arr[largest] < arr[r]) {
+      largest = r;
+    }
+  
+    if(largest != i) {
+      temp = arr[i];
+    
+      arr[i] = arr[largest];
+      arr[largest] = temp;
+      
+      heapify(arr, n, largest);
+    }
+    
+    return arr
+  }
+
+  let n = arr.length;
+  let i = Math.floor(n / 2 - 1);
+  let k = n - 1
+  
+  
+  while(i >= 0) {
+    heapify(arr, n, i)
+    i--
+  }
+  
+  while(k >= 0) {
+    temp = arr[0];
+    
+    arr[0] = arr[k];
+    arr[k] = temp;
+    
+    heapify(arr, k, 0);
+    
+    k--
+  }
+  
+  return arr
 }
 
 //Draws all of the lines and prompts the user what type of sorting they would like to take place.
@@ -105,6 +156,8 @@ function lineDraw() {
     insertSort();
   } else if(sortingChoice === "quick sort" || sortingChoice === "Quick Sort" || sortingChoice === "quick" || sortingChoice === "Quick") {
     quickSort(sortingArray, 0, sortingArray.length-1);
+  } else if(sortingChoice === "heap sort" || sortingChoice === "Heap Sort" || sortingChoice === "heap" || sortingChoice === "Heap") {
+    heapSort(sortingArray);
   }
   //Actually draws lines sortingArray.length times
   for(i = 0; i < sortingArray.length; i++) {
