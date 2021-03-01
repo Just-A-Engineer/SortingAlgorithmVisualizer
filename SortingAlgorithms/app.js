@@ -131,6 +131,44 @@ function heapSort(arr) {
   return arr
 }
 
+function mergeSort(arr) {
+  if(arr.length > 1) {
+    let mid = Math.ceil(arr.length / 2);
+    let l = arr.splice(0, mid);
+    let r = arr.splice(-mid);
+    
+    mergeSort(l);
+    mergeSort(r);
+    
+    i = 0
+    j = 0
+    k = 0
+    
+    while(i < l.length && j < r.length) {
+      if(l[i] < r[j]) {
+        arr[k] = l[i];
+        i++
+      } else {
+        arr[k] = r[j];
+        j++
+      }
+      k++
+    }
+    
+    while(i < l.length) {
+      arr[k] = l[i];
+      i++
+      k++
+    }
+    
+    while(j < r.length) {
+      arr[k] = r[j];
+      j++
+      k++
+    }
+  }
+}
+
 //Draws all of the lines and prompts the user what type of sorting they would like to take place.
 function lineDraw() {
   //Draw function assigns line drawing to a single function
@@ -150,14 +188,25 @@ function lineDraw() {
   //Assigns sorting choice to be the answer to the window prompt
   let sortingChoice = window.prompt("What sorting algorithm would you like to see? (Bubble, Insertion, Quick, Heap, and Merge)");
   //Checks to see what sorting choice is decided via sortingChoice
+  //Bubble Sort Choice
   if(sortingChoice === "bubble sort" || sortingChoice === "Bubble Sort" || sortingChoice === "bubble" || sortingChoice === "Bubble") {
     bubbleSort();
+  //Insertion Sort Choice
   } else if(sortingChoice === "insertion sort" || sortingChoice === "Insertion Sort" || sortingChoice === "insertion" || sortingChoice === "Insertion") {
     insertSort();
+  //Quick Sort Choice
   } else if(sortingChoice === "quick sort" || sortingChoice === "Quick Sort" || sortingChoice === "quick" || sortingChoice === "Quick") {
     quickSort(sortingArray, 0, sortingArray.length-1);
+  //Heap Sort Choice
   } else if(sortingChoice === "heap sort" || sortingChoice === "Heap Sort" || sortingChoice === "heap" || sortingChoice === "Heap") {
     heapSort(sortingArray);
+  //Merge Sort Choice
+  } else if(sortingChoice === "merge sort" || sortingChoice === "Merge Sort" || sortingChoice === "merge" || sortingChoice === "Merge") {
+    mergeSort(sortingArray);
+  //Not A Valid Option Alert
+  } else {
+    alert("That is not a valid option! Please try again!")
+    lineDraw();
   }
   //Actually draws lines sortingArray.length times
   for(i = 0; i < sortingArray.length; i++) {
